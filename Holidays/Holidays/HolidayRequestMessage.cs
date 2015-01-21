@@ -9,7 +9,7 @@
             this.request = request;
         }
 
-        public HolidayRequest HolidayRequest { get { return request; } }
+        protected HolidayRequest HolidayRequest { get { return request; } }
         public Notification Notification { get; private set; }
 
         public void Compose()
