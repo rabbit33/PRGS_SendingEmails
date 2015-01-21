@@ -8,24 +8,32 @@ namespace Holidays
         {
             var request = new HolidayRequest
             {
-                EmployeeEmail = "alexandra.popescu@iquestgroup.com",
-                EmployeeName = "Alexandra Popescu",
+                Employee = new Employee
+                {
+                    Name = "Alexandra",
+                    Email = "alexandra.popescu@iquestgroup.com",
+                    Manager = new Employee
+                    {
+                        Name = "John Doe",
+                        Email = "alexandra.popescu@iquestgroup.com"
+                    }
+                },
                 From = DateTime.Now,
                 To = DateTime.Now.AddDays(4),
-                ManagerEmail = "alexandra.popescu@iquestgroup.com"
             };
 
-            var emailServerConfig = new DefaultEmailServerConfiguration();
-            var emailServer = new MyEmailServer(emailServerConfig);
+            var serviceLocator = new ServiceLocator();
 
-            var holidayRequestHandler = new HolidayRequestHandler(emailServer, new RegisterHolidayRequestMessage(request));
-            holidayRequestHandler.HandleHolidayRequest(request);
+            var emailNotifier = new EmailNotifier(serviceLocator);
 
-            holidayRequestHandler = new HolidayRequestHandler(emailServer, new ApproveHolidayRequestMessage(request));
-            holidayRequestHandler.HandleHolidayRequest(request);
+            var processor = new HolidayRequestProcessor(emailNotifier, new RegisterHolidayRequestMessage(request));
+            processor.HandleHolidayRequest();
 
-            holidayRequestHandler = new HolidayRequestHandler(emailServer, new RejectHolidayRequestMessage(request));
-            holidayRequestHandler.HandleHolidayRequest(request);
+            processor = new HolidayRequestProcessor(emailNotifier, new ApproveHolidayRequestMessage(request));
+            processor.HandleHolidayRequest();
+
+            processor = new HolidayRequestProcessor(emailNotifier, new RejectHolidayRequestMessage(request));
+            processor.HandleHolidayRequest();
         }
     }
 }

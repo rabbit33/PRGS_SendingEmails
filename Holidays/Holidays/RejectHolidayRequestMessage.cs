@@ -1,33 +1,31 @@
-﻿using System.Net.Mail;
-
-namespace Holidays
+﻿namespace Holidays
 {
-    public class RejectHolidayRequestMessage : HolidayRequestMailMessage
+    public class RejectHolidayRequestMessage : HolidayRequestMessage
     {
-        public RejectHolidayRequestMessage(HolidayRequest holidayRequest)
-            : base(holidayRequest)
+        public RejectHolidayRequestMessage(HolidayRequest request)
+            : base(request)
         {
         }
 
         protected override void FillFrom()
         {
-            MailMessage.From = new MailAddress(HolidayRequest.ManagerEmail);
+            Notification.Sender = HolidayRequest.GetManagerEmail();
         }
 
         protected override void FillTo()
         {
-            MailMessage.To.Add(new MailAddress(HolidayRequest.EmployeeEmail));
+            Notification.Receiver = HolidayRequest.GetEmployeeEmail();
         }
 
         protected override void FillSubject()
         {
-            MailMessage.Subject = "Holiday Request was rejected";
+            Notification.Subject = "Holiday Request was rejected";
         }
 
         protected override void FillBody()
         {
-            MailMessage.Body = string.Format(@"Dear {0}, your holiday request for the period {1} - {2} was rejected. I'm sorry! :(",
-                HolidayRequest.EmployeeName,
+            Notification.Body = string.Format(@"Hi {0}, your holiday request for the period {1} - {2} was rejected. I'm sorry! :(",
+                HolidayRequest.GetEmployeeName(),
                 HolidayRequest.From.ToString("MM-dd-yyyy"),
                 HolidayRequest.To.ToString("MM-dd-yyyy"));
         }

@@ -2,15 +2,28 @@
 {
     public abstract class HolidayRequestMessage
     {
-        private readonly HolidayRequest holidayRequest;
+        private readonly HolidayRequest request;
 
-        protected HolidayRequestMessage(HolidayRequest holidayRequest)
+        protected HolidayRequestMessage(HolidayRequest request)
         {
-            this.holidayRequest = holidayRequest;
+            this.request = request;
         }
 
-        public HolidayRequest HolidayRequest { get { return holidayRequest; } }
+        public HolidayRequest HolidayRequest { get { return request; } }
+        public Notification Notification { get; private set; }
 
-        public abstract void Compose();
+        public void Compose()
+        {
+            Notification = new Notification();
+            FillFrom();
+            FillTo();
+            FillSubject();
+            FillBody();
+        }
+
+        protected abstract void FillFrom();
+        protected abstract void FillTo();
+        protected abstract void FillSubject();
+        protected abstract void FillBody();
     }
 }

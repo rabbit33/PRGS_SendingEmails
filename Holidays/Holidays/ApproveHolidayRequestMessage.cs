@@ -1,36 +1,35 @@
-﻿using System.Net.Mail;
+﻿using System.Configuration;
 
 namespace Holidays
 {
-    public class ApproveHolidayRequestMessage : HolidayRequestMailMessage
+    public class ApproveHolidayRequestMessage : HolidayRequestMessage
     {
-        public ApproveHolidayRequestMessage(HolidayRequest holidayRequest)
-            : base(holidayRequest)
+        public ApproveHolidayRequestMessage(HolidayRequest request)
+            : base(request)
         {
         }
 
         protected override void FillFrom()
         {
-            MailMessage.From = new MailAddress(HolidayRequest.ManagerEmail);
+            Notification.Sender = HolidayRequest.GetManagerEmail();
         }
 
         protected override void FillTo()
         {
-            //hr_holidays address
-            MailMessage.To.Add(new MailAddress("alexandra.popescu@iquestgroup.com"));
+            Notification.Receiver = ConfigurationManager.AppSettings["HR_HOLIDAYS"];
         }
 
         protected override void FillSubject()
         {
-            MailMessage.Subject = "Holiday Request was approved";
+            Notification.Subject = "Holiday Request was approved";
         }
 
         protected override void FillBody()
         {
-            MailMessage.Body = string.Format("Dear holidays department, the holiday request for the period {1} - {2} for {0} was approved.",
-                HolidayRequest.EmployeeName,
-                HolidayRequest.From.ToString("MM-dd-yyyy"),
-                HolidayRequest.To.ToString("MM-dd-yyyy"));
+            Notification.Body = string.Format("The holiday request for the period {1} - {2} for {0} was approved.",
+                HolidayRequest.GetEmployeeName(),
+                HolidayRequest.From.ToString("dd-MMM-yyyy"),
+                HolidayRequest.To.ToString("dd-MMM-yyyy"));
         }
     }
 }

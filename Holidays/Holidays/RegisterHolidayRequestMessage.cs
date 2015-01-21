@@ -1,8 +1,6 @@
-﻿using System.Net.Mail;
-
-namespace Holidays
+﻿namespace Holidays
 {
-    public class RegisterHolidayRequestMessage : HolidayRequestMailMessage
+    public class RegisterHolidayRequestMessage : HolidayRequestMessage
     {
         public RegisterHolidayRequestMessage(HolidayRequest request)
             : base(request)
@@ -11,22 +9,23 @@ namespace Holidays
 
         protected override void FillFrom()
         {
-            MailMessage.From = new MailAddress(HolidayRequest.EmployeeEmail);
+            Notification.Sender = HolidayRequest.GetEmployeeEmail();
         }
 
         protected override void FillTo()
         {
-            MailMessage.To.Add(new MailAddress(HolidayRequest.ManagerEmail));
+            Notification.Receiver = HolidayRequest.GetManagerEmail();
         }
 
         protected override void FillSubject()
         {
-            MailMessage.Subject = "I need a holiday!";
+            Notification.Subject = "I need a holiday!";
         }
 
         protected override void FillBody()
         {
-            MailMessage.Body = string.Format("Dear Bo$$, I need a holiday between {0} and {1}!",
+            Notification.Body = string.Format("Hi {0}, I need a holiday between {1} and {2}!",
+                HolidayRequest.GetManagerName(),
                 HolidayRequest.From.ToString("MM-dd-yyyy"),
                 HolidayRequest.To.ToString("MM-dd-yyyy"));
         }
