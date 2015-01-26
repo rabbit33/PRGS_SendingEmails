@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Mail;
 using Holidays.Interfaces;
 
 namespace Holidays
@@ -13,7 +12,6 @@ namespace Holidays
         {
             services = new Dictionary<object, object>
             {
-                {typeof (IConverter<Notification, MailMessage>), new NotificationToMailMessageConverter()},
                 {typeof (IEmailServerConfiguration), new DefaultEmailServerConfiguration()}
             };
         }

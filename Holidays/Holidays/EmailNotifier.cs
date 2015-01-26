@@ -6,17 +6,18 @@ namespace Holidays
     public class EmailNotifier : INotifier
     {
         private readonly IEmailServerConfiguration emailServerConfiguration;
-        private readonly IConverter<Notification, MailMessage> converter;
 
         public EmailNotifier(IServiceLocator serviceLocator)
         {
-            converter = serviceLocator.GetService<IConverter<Notification, MailMessage>>();
             emailServerConfiguration = serviceLocator.GetService<IEmailServerConfiguration>();
         }
 
-        public void Send(Notification message)
+        public void Send(Notification notification)
         {
-            var mailMessage = converter.Convert(message);
+            var mailMessage = new MailMessage(notification.Sender, 
+                notification.Receiver, 
+                notification.Subject,
+                notification.Body);
 
             using (var smtpClient = new SmtpClient(emailServerConfiguration.Host, emailServerConfiguration.Port))
             {

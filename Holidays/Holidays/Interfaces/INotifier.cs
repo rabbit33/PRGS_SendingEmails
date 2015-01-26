@@ -2,6 +2,6 @@
 {
     public interface INotifier
     {
-        void Send(Notification message);
+        void Send(Notification notification);
     }
 }
