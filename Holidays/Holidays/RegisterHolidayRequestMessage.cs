@@ -26,8 +26,8 @@
         {
             Notification.Body = string.Format("Hi {0}, I need a holiday between {1} and {2}!",
                 HolidayRequest.GetManagerName(),
-                HolidayRequest.From.ToString("MM-dd-yyyy"),
-                HolidayRequest.To.ToString("MM-dd-yyyy"));
+                HolidayRequest.GetStartDate(),
+                HolidayRequest.GetEndDate());
         }
     }
 }

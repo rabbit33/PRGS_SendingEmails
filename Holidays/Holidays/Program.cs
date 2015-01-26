@@ -18,8 +18,11 @@ namespace Holidays
                         Email = "alexandra.popescu@iquestgroup.com"
                     }
                 },
-                From = DateTime.Now,
-                To = DateTime.Now.AddDays(4),
+                Interval = new Interval
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddDays(4)
+                }
             };
 
             var serviceLocator = new ServiceLocator();

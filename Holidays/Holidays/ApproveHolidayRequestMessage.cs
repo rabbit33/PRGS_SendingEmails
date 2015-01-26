@@ -28,8 +28,8 @@ namespace Holidays
         {
             Notification.Body = string.Format("The holiday request for the period {1} - {2} for {0} was approved.",
                 HolidayRequest.GetEmployeeName(),
-                HolidayRequest.From.ToString("dd-MMM-yyyy"),
-                HolidayRequest.To.ToString("dd-MMM-yyyy"));
+                HolidayRequest.GetStartDate(),
+                HolidayRequest.GetEndDate());
         }
     }
 }

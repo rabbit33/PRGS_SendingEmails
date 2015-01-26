@@ -1,4 +1,6 @@
-﻿namespace Holidays
+﻿using Holidays.Interfaces;
+
+namespace Holidays
 {
     public class HolidayRequestProcessor : IHolidayRequestProcessor
     {

@@ -26,8 +26,8 @@
         {
             Notification.Body = string.Format(@"Hi {0}, your holiday request for the period {1} - {2} was rejected. I'm sorry! :(",
                 HolidayRequest.GetEmployeeName(),
-                HolidayRequest.From.ToString("MM-dd-yyyy"),
-                HolidayRequest.To.ToString("MM-dd-yyyy"));
+                HolidayRequest.Interval.StartDate.ToString("MM-dd-yyyy"),
+                HolidayRequest.Interval.EndDate.ToString("MM-dd-yyyy"));
         }
     }
 }

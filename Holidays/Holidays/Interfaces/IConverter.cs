@@ -1,4 +1,4 @@
-﻿namespace Holidays
+﻿namespace Holidays.Interfaces
 {
     public interface IConverter<in T, out T1>
     {

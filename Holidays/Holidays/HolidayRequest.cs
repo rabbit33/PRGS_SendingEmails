@@ -1,14 +1,9 @@
-﻿using System;
-
-namespace Holidays
+﻿namespace Holidays
 {
     public class HolidayRequest
     {
         public Employee Employee { get; set; }
-
-        //holiday period
-        public DateTime From;
-        public DateTime To;
+        public Interval Interval { get; set; }
 
         public string GetEmployeeEmail()
         {
@@ -28,6 +23,16 @@ namespace Holidays
         public string GetManagerName()
         {
             return Employee.Manager.Name;
+        }
+
+        public string GetStartDate()
+        {
+            return Interval.StartDate.ToString("MM-dd-yyyy");
+        }
+
+        public string GetEndDate()
+        {
+            return Interval.EndDate.ToString("MM-dd-yyyy");
         }
     }
 }
